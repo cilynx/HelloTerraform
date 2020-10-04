@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<body onload="loadDoc()">
+
+
+<input id="input">
+<button type="button" onclick="loadDoc()">Bork! Bork! Bork!</button>
+
+<span id="dyn"></span>
+
+<script>
+   function loadDoc() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+         if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+            document.getElementById("dyn").innerHTML = this.responseText;
+         }
+      };
+      var input = document.getElementById("input")
+      if (input && input.value) {
+         xhttp.open("POST", "${invoke_url}/foo", true);
+         xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+         xhttp.send(input.value)
+      } else {
+         xhttp.open("GET", "${invoke_url}/foo", true);
+         xhttp.send();
+      }
+   }
+</script>
+
+</body>
+</html>
